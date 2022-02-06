@@ -1,10 +1,22 @@
 import React, { FC } from "react";
-import { ModelList } from "../interfaces/samsung-interafce";
 import { useAppSelector } from "../store/hooks";
-import ShadowCard from "./styled/ShadowCard";
+
+import ColorPickerr from "./ColorPickerr";
 
 const DisplayResults: FC = () => {
-  const selectedProduct = useAppSelector((state) => state.selectProduct.value);
+  const selectedProduct = useAppSelector(
+    (state) => state.selectProduct.selectedProduct
+  );
+
+  const filteredModel = useAppSelector(
+    (state) => state.selectProduct.filteredModel
+  );
+
+  const displayData = () => {
+    return filteredModel ? filteredModel : selectedProduct?.modelList[0];
+  };
+
+  console.log(displayData());
 
   return (
     <div className="w-full flex flex-row flex-wrap">
@@ -13,23 +25,39 @@ const DisplayResults: FC = () => {
           <h1 className="text-5xl uppercase font-bold text-center my-8">
             {selectedProduct.fmyMarketingName}
           </h1>
+
+          {selectedProduct.chipOptions[0].fmyChipType === "COLOR" ? (
+            <ColorPickerr
+              thumb-url={displayData()?.thumbUrl}
+              thumb-url-alt={displayData()?.thumbUrl}
+              color-options={selectedProduct?.chipOptions[0].optionList}
+            ></ColorPickerr>
+          ) : (
+            ""
+          )}
+
+          {selectedProduct.chipOptions[1]?.optionList.map((option) => (
+            <p key={option.optionCode}>{option.optionLocalName}</p>
+          ))}
+
           <div className="flex flex-row flex-wrap justify-center px-20">
-            {selectedProduct.modelList.map((model: ModelList) => (
-              <ShadowCard key={model.modelCode}>
-                <p>{model.displayName}</p>
+            {filteredModel ? (
+              <div>
+                <p>{filteredModel.displayName}</p>
                 <p>
-                  {model.fmyChipList[0].fmyChipType}{" "}
-                  {model.fmyChipList[0].fmyChipName}
+                  {filteredModel.fmyChipList[0].fmyChipType}{" "}
+                  {filteredModel.fmyChipList[0].fmyChipName}
                 </p>
-                <p>{model.fmyChipList[1]?.fmyChipName}</p>
-                <img
-                  src={model.thumbUrl}
-                  alt={model.thumbUrlAlt}
-                  style={{ maxWidth: "250px" }}
-                />
-                <p>{model.priceDisplay ? model.priceDisplay : "N/A"}</p>
-              </ShadowCard>
-            ))}
+                <p>{filteredModel.fmyChipList[1]?.fmyChipName}</p>
+                <p>
+                  {filteredModel.priceDisplay
+                    ? filteredModel.priceDisplay
+                    : "N/A"}
+                </p>
+              </div>
+            ) : (
+              ""
+            )}
           </div>
         </div>
       ) : (

@@ -1,12 +1,14 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { ProductList } from "../interfaces/samsung-interafce";
+import { ModelList, ProductList } from "../interfaces/samsung-interafce";
 
 interface SelectedProductState {
-  value: ProductList | null;
+  selectedProduct: ProductList | null;
+  filteredModel: ModelList | null;
 }
 
 const initialState: SelectedProductState = {
-  value: null,
+  selectedProduct: null,
+  filteredModel: null,
 };
 
 const selectProductSlice = createSlice({
@@ -14,11 +16,18 @@ const selectProductSlice = createSlice({
   initialState,
   reducers: {
     selectProduct(state, action: PayloadAction<ProductList>) {
-      state.value = action.payload;
+      state.selectedProduct = action.payload;
+    },
+    filterModel(state, action: PayloadAction<ModelList | null>) {
+      state.filteredModel = action.payload;
+    },
+    resetModel(state) {
+      state.filteredModel = null;
     },
   },
 });
 
-export const { selectProduct } = selectProductSlice.actions;
+export const { selectProduct, filterModel, resetModel } =
+  selectProductSlice.actions;
 
 export default selectProductSlice.reducer;

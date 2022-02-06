@@ -1,9 +1,9 @@
 import React, { FC } from "react";
 import { ProductList } from "../interfaces/samsung-interafce";
 import { useAppDispatch, useAppSelector } from "../store/hooks";
-import { selectProduct } from "../features/products-slice";
+import { selectProduct, resetModel } from "../features/products-slice";
 import { useGetAllProductsQuery } from "../features/api-slice";
-import TopBar from "./styled/TopBar";
+import MenuBar from "./styled/MenuBar";
 import MenuItem from "./styled/MenuItem";
 
 const MainMenu: FC = () => {
@@ -11,18 +11,21 @@ const MainMenu: FC = () => {
   const dispatch = useAppDispatch();
   const productData = data?.response.resultData.productList;
 
-  const selectedProduct = useAppSelector((state) => state.selectProduct.value);
+  const selectedProduct = useAppSelector(
+    (state) => state.selectProduct.selectedProduct
+  );
 
-  function setProduct(product: ProductList) {
+  function setProduct(product: ProductList): void {
+    dispatch(resetModel());
     dispatch(selectProduct(product));
   }
 
   return (
-    <TopBar>
+    <MenuBar>
       {productData ? (
         productData.map((product: ProductList) => (
           <MenuItem
-            key={product.fmyMarketingName}
+            key={product.familyRecord}
             active={
               product.fmyMarketingName === selectedProduct?.fmyMarketingName
             }
@@ -34,7 +37,7 @@ const MainMenu: FC = () => {
       ) : (
         <p>One moment please...</p>
       )}
-    </TopBar>
+    </MenuBar>
   );
 };
 
