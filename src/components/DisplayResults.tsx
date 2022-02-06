@@ -1,7 +1,10 @@
 import React, { FC } from "react";
 import { useAppSelector } from "../store/hooks";
-
-import ColorPickerr from "./ColorPickerr";
+import ColorPicker from "./ColorPicker";
+import VariationPill from "./styled/VariationPill";
+import ListItem from "./styled/ListItem";
+import LinkButton from "./styled/LinkButton";
+import ImageCarousel from "./ImageCarousel";
 
 const DisplayResults: FC = () => {
   const selectedProduct = useAppSelector(
@@ -19,45 +22,111 @@ const DisplayResults: FC = () => {
   console.log(displayData());
 
   return (
-    <div className="w-full flex flex-row flex-wrap">
+    <div className="w-full xl:w-3/4 flex flex-row flex-wrap lg:mx-auto">
       {selectedProduct ? (
-        <div className="w-full">
-          <h1 className="text-5xl uppercase font-bold text-center my-8">
+        <div className="w-full ">
+          <h1 className="text-5xl text-zinc-800 uppercase font-bold text-center my-16">
             {selectedProduct.fmyMarketingName}
           </h1>
 
-          {selectedProduct.chipOptions[0].fmyChipType === "COLOR" ? (
-            <ColorPickerr
-              thumb-url={displayData()?.thumbUrl}
-              thumb-url-alt={displayData()?.thumbUrl}
-              color-options={selectedProduct?.chipOptions[0].optionList}
-            ></ColorPickerr>
-          ) : (
-            ""
-          )}
+          <div className="flex flex-row justify-around items-center divide-x border-zinc-400">
+            <div className="w-1/2 flex justify-center">
+              <ul className="list-disc">
+                {displayData()?.usp.map((usp, index) => (
+                  <ListItem medium key={index}>
+                    {usp}
+                  </ListItem>
+                ))}
+              </ul>
+            </div>
 
-          {selectedProduct.chipOptions[1]?.optionList.map((option) => (
-            <p key={option.optionCode}>{option.optionLocalName}</p>
-          ))}
-
-          <div className="flex flex-row flex-wrap justify-center px-20">
-            {filteredModel ? (
-              <div>
-                <p>{filteredModel.displayName}</p>
-                <p>
-                  {filteredModel.fmyChipList[0].fmyChipType}{" "}
-                  {filteredModel.fmyChipList[0].fmyChipName}
-                </p>
-                <p>{filteredModel.fmyChipList[1]?.fmyChipName}</p>
-                <p>
-                  {filteredModel.priceDisplay
-                    ? filteredModel.priceDisplay
-                    : "N/A"}
-                </p>
+            {selectedProduct.chipOptions[0].fmyChipType === "COLOR" ? (
+              <div className="w-1/2 flex justify-center">
+                <ColorPicker
+                  thumb-url={displayData()?.thumbUrl}
+                  thumb-url-alt={displayData()?.thumbUrlAlt}
+                  color-options={selectedProduct?.chipOptions[0].optionList}
+                ></ColorPicker>
               </div>
             ) : (
-              ""
+              <div className="w-1/2 flex justify-center">
+                <img
+                  src={displayData()?.thumbUrl}
+                  alt={displayData()?.thumbUrlAlt}
+                  style={{ maxHeight: "330px" }}
+                />
+              </div>
             )}
+          </div>
+
+          <div className="flex items-end my-12">
+            <h2 className="text-xl text-zinc-600 font-semibold mx-8">
+              Variaties:
+            </h2>
+
+            <div className="flex items-center space-x-8">
+              {selectedProduct.chipOptions[1]
+                ? selectedProduct.chipOptions[1]?.optionList.map((option) => (
+                    <VariationPill key={option.optionCode}>
+                      <p>{option.optionLocalName}</p>
+                    </VariationPill>
+                  ))
+                : selectedProduct.chipOptions[0]?.optionList.map((option) => (
+                    <VariationPill key={option.optionCode}>
+                      <p>{option.optionLocalName}</p>
+                    </VariationPill>
+                  ))}
+            </div>
+          </div>
+
+          <div className="flex flex-row justify-center rounded-md bg-zinc-100 space-x-8 mx-auto my-12 p-4">
+            <div className="w-1/2">
+              <ImageCarousel images={displayData()!.galleryImage} />
+            </div>
+
+            <div className="w-1/2 flex justify-center items-center  px-12 py-6">
+              {displayData() ? (
+                <div className="h-full w-full flex flex-col justify-between border border-zinc-300 rounded-md p-12">
+                  <ul className="list-disc ml-4">
+                    <ListItem>Model: {displayData()?.modelCode}</ListItem>
+                    <ListItem>
+                      Score: {displayData()?.ratings} (
+                      {displayData()?.reviewCount} Beoordelingen)
+                    </ListItem>
+                    <ListItem>
+                      Op vooraad:{" "}
+                      {displayData()?.stockStatusText ? "Ja" : "Nee"}
+                    </ListItem>
+                    <ListItem>
+                      Prijs vanaf:{" "}
+                      {displayData()?.priceDisplay
+                        ? displayData()?.priceDisplay
+                        : "N/A"}
+                    </ListItem>
+                  </ul>
+
+                  <div className="flex justify-around">
+                    <LinkButton
+                      href={`https://samsung.com/${displayData()?.reviewUrl}`}
+                      target={"_blank"}
+                      rel={"noreferrer"}
+                    >
+                      Lees de reviews
+                    </LinkButton>
+
+                    <LinkButton
+                      href={`https://samsung.com/${displayData()?.pdpUrl}`}
+                      target={"_blank"}
+                      rel={"noreferrer"}
+                    >
+                      Naar de product page
+                    </LinkButton>
+                  </div>
+                </div>
+              ) : (
+                ""
+              )}
+            </div>
           </div>
         </div>
       ) : (

@@ -7,7 +7,9 @@ function App() {
   return (
     <div className="w-full h-full">
       <MainMenu />
-      <DisplayResults />
+      <div className="lg:w-3/4 mx-auto">
+        <DisplayResults />
+      </div>
     </div>
   );
 }

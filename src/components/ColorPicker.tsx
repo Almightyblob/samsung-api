@@ -1,4 +1,4 @@
-import React, { FC, useState } from "react";
+import React, { FC } from "react";
 import { useAppDispatch, useAppSelector } from "../store/hooks";
 import { filterModel } from "../features/products-slice";
 import { ModelList, OptionList } from "../interfaces/samsung-interafce";
@@ -11,7 +11,7 @@ interface ColorPickerProps {
   "thumb-url-alt"?: string;
 }
 
-const ColorPicker = (props: ColorPickerProps) => {
+const ColorPicker: FC<ColorPickerProps> = (props) => {
   const dispatch = useAppDispatch();
 
   const selectedProduct = useAppSelector(
@@ -39,12 +39,16 @@ const ColorPicker = (props: ColorPickerProps) => {
 
   return (
     <div className="flex flex-row items-center space-y-2">
-      <img src={props["thumb-url"]} alt={props["thumb-url-alt"]} />
+      <img
+        src={props["thumb-url"]}
+        alt={props["thumb-url-alt"]}
+        style={{ maxHeight: "330px" }}
+      />
       <div>
         {props["color-options"]?.map((option) => (
           <div
             key={option.optionCode}
-            className="flex flex-col items-center space-y-4"
+            className="flex flex-col items-center mb-4"
           >
             <ColorButton
               color={option.optionCode}
