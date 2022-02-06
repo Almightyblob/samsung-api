@@ -1,18 +1,14 @@
 import React from 'react';
 import './App.css';
-import StyledForm from './components/StyledForm';
+import DisplayResults from './components/DisplayResults'
+import MainMenu from './components/MainMenu';
 
 function App() {
+
   return (
-    <div>
-      <StyledForm>
-        <form>
-          <input type="text" placeholder="Full name" />
-          <input type="text" placeholder="Email" />
-          <input type="text" placeholder="Password" />
-          <button>Sign In</button>
-        </form>
-    </StyledForm>
+    <div className='w-full h-full'>
+      <MainMenu />
+      <DisplayResults />
     </div>
   );
 }
