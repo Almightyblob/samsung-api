@@ -8,7 +8,12 @@ interface ImageProps {
 
 const ImageCarousel: FC<ImageProps> = (props) => {
   return (
-    <Carousel showIndicators={false} swipeable={true} emulateTouch={true}>
+    <Carousel
+      showIndicators={false}
+      swipeable={true}
+      emulateTouch={true}
+      showStatus={false}
+    >
       {props.images.map((image, index) => (
         <div key={index}>
           <img src={image} style={{ maxHeight: "800px", width: "auto" }} />
