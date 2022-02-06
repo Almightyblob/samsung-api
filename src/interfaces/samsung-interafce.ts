@@ -1,16 +1,16 @@
 export interface samsungApiResponse {
-  optionlist:OptionList,
-  chipOption:ChipOption,
-  awardList:AwardList,
-  fmyChipList:FmyChipList,
-  storePromotion:StorePromotion,
-  monthlyPriceInfo:MonthlyPriceInfo,
-  yopFlags:TopFlags,
-  modelList:ModelList,
-  productList:ProductList,
-  resultData:ResultData,
-  response:Response,
-  rootObject:RootObject
+  optionlist: OptionList;
+  chipOption: ChipOption;
+  awardList: AwardList;
+  fmyChipList: FmyChipList;
+  storePromotion: StorePromotion;
+  monthlyPriceInfo: MonthlyPriceInfo;
+  yopFlags: TopFlags;
+  modelList: ModelList;
+  productList: ProductList;
+  resultData: ResultData;
+  response: Response;
+  rootObject: RootObject;
 }
 
 export interface OptionList {
