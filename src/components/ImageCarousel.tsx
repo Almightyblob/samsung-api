@@ -3,7 +3,7 @@ import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a lo
 import { Carousel } from "react-responsive-carousel";
 
 interface ImageProps {
-  images: string[];
+  images?: string[];
 }
 
 const ImageCarousel: FC<ImageProps> = (props) => {
@@ -14,7 +14,7 @@ const ImageCarousel: FC<ImageProps> = (props) => {
       emulateTouch={true}
       showStatus={false}
     >
-      {props.images.map((image, index) => (
+      {props.images?.map((image, index) => (
         <div key={index}>
           <img src={image} style={{ maxHeight: "800px", width: "auto" }} />
         </div>

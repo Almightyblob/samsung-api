@@ -81,7 +81,7 @@ const DisplayResults: FC = () => {
 
           <div className="flex flex-col bg-zinc-100 space-x-8 mx-auto my-12 p-4 | xl:flex-row xl:justify-center xl:rounded-md">
             <div className="w-full | xl:w-1/2">
-              <ImageCarousel images={displayData()!.galleryImage} />
+              <ImageCarousel images={displayData()?.galleryImage} />
             </div>
 
             <div className="w-full flex justify-center items-center  px-12 py-6 | xl:w-1/2">
