@@ -19,8 +19,6 @@ const DisplayResults: FC = () => {
     return filteredModel ? filteredModel : selectedProduct?.modelList[0];
   };
 
-  console.log(displayData());
-
   return (
     <div className="w-full xl:w-3/4 xl:mx-auto">
       {selectedProduct ? (

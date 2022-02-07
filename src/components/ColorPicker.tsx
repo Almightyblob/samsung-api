@@ -30,10 +30,7 @@ const ColorPicker: FC<ColorPickerProps> = (props) => {
     return result;
   }
 
-  console.log(props);
-
   function filter(type: string): void {
-    console.log(type);
     dispatch(filterModel(filterByType(type)));
   }
 
